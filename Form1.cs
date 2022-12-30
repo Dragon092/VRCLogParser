@@ -1,6 +1,8 @@
 namespace VRCLogParser
 {
     using System.IO;
+    using System.Windows.Forms;
+    using static System.Net.Mime.MediaTypeNames;
 
     public partial class Form1 : Form
     {
@@ -25,7 +27,12 @@ namespace VRCLogParser
 
         private void parse_file(FileInfo file)
         {
-            System.Diagnostics.Debug.WriteLine("Parsing "+file.Name+"...");
+            System.Diagnostics.Debug.WriteLine($"Parsing {file.Name}...");
+
+            string[] lines = File.ReadAllLines(file.FullName);
+
+            foreach (string line in lines.Where(l => l.Contains("[Video Playback]")))
+                listBox1.Items.Add(line);
         }
     }
 }
