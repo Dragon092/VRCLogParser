@@ -1,6 +1,7 @@
 namespace VRCLogParser
 {
     using System.IO;
+    using System.Linq;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
     using static System.ComponentModel.Design.ObjectSelectorEditor;
@@ -42,7 +43,7 @@ namespace VRCLogParser
 
             lines = lines.Reverse().ToArray();
 
-            foreach (string line in lines.Where(l => l.Contains("[Video Playback]")))
+            foreach (string line in lines.Where(l => l.Contains(textBox1.Text)))
                 listBox1.Items.Add(line);
         }
 
