@@ -30,8 +30,18 @@ namespace VRCLogParser
             }
 
             foreach (FileInfo file in Files)
+        public string[] WriteSafeReadAllLines(String path)
+        {
+            using (var filestream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var streamreader = new StreamReader(filestream))
             {
-                parse_file(file);
+                List<string> file = new List<string>();
+                while (!streamreader.EndOfStream)
+                {
+                    file.Add(streamreader.ReadLine());
+                }
+
+                return file.ToArray();
             }
         }
 
@@ -39,7 +49,7 @@ namespace VRCLogParser
         {
             System.Diagnostics.Debug.WriteLine($"Parsing {file.Name}...");
 
-            string[] lines = File.ReadAllLines(file.FullName);
+            string[] lines = WriteSafeReadAllLines(file.FullName);
 
             lines = lines.Reverse().ToArray();
 
