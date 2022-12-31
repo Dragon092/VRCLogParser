@@ -22,14 +22,14 @@ namespace VRCLogParser
 
             DirectoryInfo d = new DirectoryInfo(@"C:\Users\mail\AppData\LocalLow\VRChat\VRChat");
 
-            FileInfo[] Files = d.GetFiles("*.txt"); //Getting Text files
+            FileInfo[] files = d.GetFiles("*.txt").OrderBy(p => p.CreationTime).ToArray();
 
-            if(Files.Length > 1)
+            foreach (FileInfo file in files)
             {
-                System.Diagnostics.Debug.WriteLine($"Found more then 1 log file: {Files.Length} found");
+                parse_file(file);
             }
+        }
 
-            foreach (FileInfo file in Files)
         public string[] WriteSafeReadAllLines(String path)
         {
             using (var filestream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
