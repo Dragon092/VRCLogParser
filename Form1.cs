@@ -22,7 +22,7 @@ namespace VRCLogParser
 
             DirectoryInfo d = new DirectoryInfo(@"C:\Users\mail\AppData\LocalLow\VRChat\VRChat");
 
-            FileInfo[] files = d.GetFiles("*.txt").OrderBy(p => p.CreationTime).ToArray();
+            FileInfo[] files = d.GetFiles("*.txt").OrderByDescending(p => p.CreationTime).ToArray();
 
             foreach (FileInfo file in files)
             {
