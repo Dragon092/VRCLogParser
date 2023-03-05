@@ -1,5 +1,6 @@
 namespace VRCLogParser
 {
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -9,9 +10,13 @@ namespace VRCLogParser
 
     public partial class MainForm : Form
     {
+        private string vrchat_locallow_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "VRChat", "VRChat");
+
         public MainForm()
         {
             InitializeComponent();
+
+            //System.Diagnostics.Debug.WriteLine($"{path}");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -20,10 +25,7 @@ namespace VRCLogParser
 
             listBox1.Items.Clear();
 
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "VRChat", "VRChat");
-            //System.Diagnostics.Debug.WriteLine($"{path}");
-
-            DirectoryInfo directory_info = new DirectoryInfo(path);
+            DirectoryInfo directory_info = new DirectoryInfo(vrchat_locallow_path);
 
             FileInfo[] files = directory_info.GetFiles("*.txt").OrderByDescending(p => p.CreationTime).ToArray();
 
@@ -71,6 +73,11 @@ namespace VRCLogParser
 
                 Clipboard.SetText(item.Value);
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", vrchat_locallow_path);
         }
     }
 }
