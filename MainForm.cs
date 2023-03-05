@@ -20,9 +20,12 @@ namespace VRCLogParser
 
             listBox1.Items.Clear();
 
-            DirectoryInfo d = new DirectoryInfo(@"C:\Users\mail\AppData\LocalLow\VRChat\VRChat");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "VRChat", "VRChat");
+            //System.Diagnostics.Debug.WriteLine($"{path}");
 
-            FileInfo[] files = d.GetFiles("*.txt").OrderByDescending(p => p.CreationTime).ToArray();
+            DirectoryInfo directory_info = new DirectoryInfo(path);
+
+            FileInfo[] files = directory_info.GetFiles("*.txt").OrderByDescending(p => p.CreationTime).ToArray();
 
             foreach (FileInfo file in files)
             {
